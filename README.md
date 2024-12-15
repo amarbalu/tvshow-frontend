@@ -1,4 +1,4 @@
-cat > README.md << EOF
+
 # **TV Shows Web Application**
 
 This project is a full-stack application that allows users to list and view details of TV shows. It is split into the following components:
