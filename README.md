@@ -1,70 +1,184 @@
-# Getting Started with Create React App
+cat > README.md << EOF
+# **TV Shows Web Application**
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is a full-stack application that allows users to list and view details of TV shows. It is split into the following components:
 
-## Available Scripts
+- **Backend**: A Java-based REST API that fetches and processes TV show details using the TVMaze API.
+- **Frontend**: A React-based user interface to display TV shows and their details.
+- **Docker**: Both backend and frontend are containerized and managed using \`docker-compose\`.
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## **Table of Contents**
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+1. [Project Overview](#project-overview)
+2. [Technologies Used](#technologies-used)
+3. [Setup and Running the Application](#setup-and-running-the-application)
+4. [API Endpoints Documentation](#api-endpoints-documentation)
+5. [Assumptions and Decisions](#assumptions-and-decisions)
+6. [Notes](#notes)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## **Project Overview**
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The TV Shows Web Application provides the following features:
 
-### `npm run build`
+1. Consumes a \`tvtitles.txt\` file to process TV show titles and fetch details from the [TVMaze API](http://api.tvmaze.com/).
+2. Lists all TV shows retrieved via the API.
+3. Displays detailed information about individual TV shows.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## **Technologies Used**
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### **Backend**
+- Java 8+
+- Spring Boot
+- H2 in-memory database (optional for data persistence)
 
-### `npm run eject`
+### **Frontend**
+- React
+- CSS Framework (e.g., Material-UI or Bootstrap)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### **Other Tools**
+- Docker
+- Docker Compose
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## **Setup and Running the Application**
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### **Prerequisites**
+1. Install [Docker](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/install/) on your system.
+2. For local development, ensure Java 8+ and Node.js are installed.
 
-## Learn More
+### **Steps to Run the Application**
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+#### **Using Docker**
+1. Clone the main repository:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+   git clone https://github.com/amarbalu/TVMaze.git
+   cd TVMaze
 
-### Code Splitting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+2. Clone the frontend repository:
 
-### Analyzing the Bundle Size
+   cd tvshow-frontend
+   
+   git clone https://github.com/amarbalu/tvshow-frontend.git
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-### Making a Progressive Web App
+4. Clone the backend repository:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+   cd tvshow-backend
+   
+   git clone https://github.com/amarbalu/tvshow-backend.git
 
-### Advanced Configuration
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+5. Start the application:
 
-### Deployment
+   docker-compose up --build
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
 
-### `npm run build` fails to minify
+6. Access the application:
+   - **Frontend**: [http://localhost:3000](http://localhost:3000)
+   - **Backend**: [http://localhost:8080](http://localhost:8080)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
+
+#### **Local Development (Without Docker)**
+
+1. **Backend**:
+   - Clone the backend repository:
+
+     cd tvshow-backend
+     
+     ./mvnw spring-boot:run
+
+   - Backend will be accessible at \`http://localhost:8080\`.
+
+2. **Frontend**:
+   - Clone the frontend repository:
+
+     cd tvshow-frontend
+     
+     npm install
+     
+     npm start
+
+   - Frontend will be accessible at \`http://localhost:3000\`.
+
+---
+
+## **API Endpoints Documentation**
+
+| Method | Endpoint          | Description                            |
+| ------ | ----------------- | -------------------------------------- |
+| GET    | \`/api/shows\`      | Fetch the list of TV shows             |
+| POST   | \`/api/shows\`      | Add TV show titles from \`tvtitles.txt\` |
+| GET    | \`/api/shows/{id}\` | Fetch details of a specific TV show    |
+
+### **Sample API Usage**
+
+#### **1. Fetch All TV Shows**
+**Request**:
+\`\`\`bash
+GET /api/shows
+\`\`\`
+
+**Response**:
+\`\`\`json
+[
+  {
+    "id": 1,
+    "name": "Breaking Bad",
+    "genre": "Drama",
+    "network": "AMC",
+    "status": "Ended",
+    "schedule": {
+      "time": "21:00",
+      "days": ["Sunday"]
+    },
+    "summary": "A high school chemistry teacher turned methamphetamine producer."
+  }
+]
+\`\`\`
+
+---
+
+## **Assumptions and Decisions**
+
+1. **Data Source**: TV show titles are processed from the \`tvtitles.txt\` file.
+2. **Data Persistence**: Backend uses an in-memory database (H2) for simplicity.
+3. **UI Design**: Frontend uses a responsive CSS framework for improved design.
+4. **Docker Ports**:
+   - Backend: \`8080\`
+   - Frontend: \`3000\`
+5. **TVMaze API Integration**:
+   - \`/singlesearch/shows?q={title}\` is used to fetch show details.
+
+---
+
+## **Notes**
+
+1. The application demonstrates a minimal setup for listing and displaying TV shows.
+2. Future enhancements may include:
+   - Persistent database (e.g., MySQL/PostgreSQL).
+   - Authentication and role-based access control.
+   - Advanced UI features such as search and filters.
+3. Ensure CORS is configured correctly in the backend for local frontend testing.
+
+---
+
+## **Author**
+
+- **Name**: Amar Balu
+- **GitHub**: [https://github.com/amarbalu](https://github.com/amarbalu)
+
+---
+
+## **License**
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
+EOF
